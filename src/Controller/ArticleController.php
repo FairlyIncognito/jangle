@@ -13,11 +13,11 @@ class ArticleController extends AbstractController
      */
     public function homepage()
     {
-        return new Response('First page');
+        return $this->render('article/homepage.html.twig');
     }
 
     /**
-     * @Route("/news/{slug}")
+     * @Route("/news/{slug}", name="article_show")
      */
     public function show($slug) 
     {
@@ -30,6 +30,17 @@ class ArticleController extends AbstractController
         return $this->render('article/show.html.twig', [
             'title' => ucwords(str_replace('-', ' ', $slug)),
             'comments' => $comments,
+            'slug' => $slug,
         ]);
+    }
+
+    /**
+     * @Route("/news/{slug}/heart", name="article_toggle_heart", methods={"POST"})
+     */
+    public function toggleArticleHeart($slug)
+    {
+        // TODO - actually heart/unheart the article!
+
+        return $this->json(['hearts' => rand(5, 100)]);
     }
 }
